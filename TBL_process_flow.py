@@ -172,7 +172,7 @@ if click_data:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 TBL Allocation: {selected_goal_key}")
+    st.write(f"### 📋 TBL Business Goal Allocation: {selected_goal_key}")
     
     col1, col2, col3 = st.columns(3)
     
