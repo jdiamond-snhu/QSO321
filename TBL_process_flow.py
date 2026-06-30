@@ -66,7 +66,7 @@ INDUSTRY_SECTOR_DATA = {
 }
 
 # 4. Sidebar Configuration
-st.sidebar.header("1. Choose a Business Goal")
+st.sidebar.header("1. Choose a TBL Business Goal")
 selected_goal_key = st.sidebar.radio(
     "Goal Selector", 
     list(STRATEGIC_GOALS_DATA.keys()),
@@ -75,7 +75,7 @@ selected_goal_key = st.sidebar.radio(
 )
 
 # Optional Step 2 Interface with bold Markdown tag
-st.sidebar.header("2. Add Industry Filter (**Optional**)")
+st.sidebar.header("2. Optional: Choose an Industry")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
     ["None (View Universal Strategy)"] + list(INDUSTRY_SECTOR_DATA.keys()),
