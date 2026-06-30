@@ -169,40 +169,33 @@ if click_data:
         st.rerun()
 
 # 7. Dynamic Strategic Alignment Output
-st.write(f"### 📋 Triple Bottom Line Alignment: {selected_goal_key}")
-
-# Render high-contrast containers using standard Streamlit columns
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown(
-        f"""
-        <div style="border: 2px solid orange; padding: 15px; border-radius: 8px; background-color: rgba(255, 165, 0, 0.05); min-height: 150px;">
-            <h3 style="color: darkorange; margin-top: 0;">🟠 People Allocation</h3>
-            <p style="font-size: 16px; color: #333333;">{active_goal_info["people"]}</p>
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
+if selected_goal_key is not None:
+    st.write(f"### 📋 Triple Bottom Line Alignment: {selected_goal_key}")
     
-with col2:
-    st.markdown(
-        f"""
-        <div style="border: 2px solid #3498db; padding: 15px; border-radius: 8px; background-color: rgba(52, 152, 219, 0.05); min-height: 150px;">
-            <h3 style="color: #2980b9; margin-top: 0;">🔵 Planet Allocation</h3>
-            <p style="font-size: 16px; color: #333333;">{active_goal_info["planet"]}</p>
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
-    
-with col3:
-    st.markdown(
-        f"""
-        <div style="border: 2px solid #2ecc71; padding: 15px; border-radius: 8px; background-color: rgba(46, 204, 113, 0.05); min-height: 150px;">
-            <h3 style="color: #27ae60; margin-top: 0;">🟢 Profit Allocation</h3>
-            <p style="font-size: 16px; color: #333333;">{active_goal_info["profit"]}</p>
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(f"""
+            <div style="border: 2px solid orange; padding: 15px; border-radius: 8px; background-color: rgba(255, 165, 0, 0.05); min-height: 150px;">
+                <h3 style="color: darkorange; margin-top: 0;">🟠 People Allocation</h3>
+                <p style="font-size: 16px; color: #333333;">{active_goal_info["people"]}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+    with col2:
+        st.markdown(f"""
+            <div style="border: 2px solid #3498db; padding: 15px; border-radius: 8px; background-color: rgba(52, 152, 219, 0.05); min-height: 150px;">
+                <h3 style="color: #2980b9; margin-top: 0;">🔵 Planet Allocation</h3>
+                <p style="font-size: 16px; color: #333333;">{active_goal_info["planet"]}</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+    with col3:
+        st.markdown(f"""
+            <div style="border: 2px solid #2ecc71; padding: 15px; border-radius: 8px; background-color: rgba(46, 204, 113, 0.05); min-height: 150px;">
+                <h3 style="color: #27ae60; margin-top: 0;">🟢 Profit Allocation</h3>
+                <p style="font-size: 16px; color: #333333;">{active_goal_info["profit"]}</p>
+            </div>
+            """, unsafe_allow_html=True)
+else:
+    st.info("💡 Please select a business goal from the sidebar to view its Triple Bottom Line alignment details.")
+
