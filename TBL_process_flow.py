@@ -48,17 +48,17 @@ if "placed_goals" not in st.session_state:
 
 # 4. Sidebar Goal Selection
 st.sidebar.header("1. Choose a Business Goal")
+
+# Setting index=None forces the radio list to start empty
 selected_goal_key = st.sidebar.radio(
     "Active Goal Selector", 
     list(STRATEGIC_GOALS_DATA.keys()),
+    index=None,
     label_visibility="collapsed"
 )
 
-# Extract data for the actively selected goal
-active_goal_info = STRATEGIC_GOALS_DATA[selected_goal_key]
-active_emoji = active_goal_info["symbol"]
-
-if st.sidebar.button("Reset Placed Markers"):
+# Simplified the button label to just "Reset"
+if st.sidebar.button("Reset"):
     st.session_state.placed_goals = []
     st.rerun()
 
