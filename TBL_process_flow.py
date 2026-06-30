@@ -119,7 +119,7 @@ fig.add_trace(go.Scatter(
 ))
 
 # Labels for the Legs & Seat
-fig.add_trace(go.Scatter(x=[5.0], y=[9.7], mode="text", text=["<b>SUSTAINABILITY LOAD</b>"], textposition="top center"))
+fig.add_trace(go.Scatter(x=[5.0], y=[9.7], mode="text", text=["<b>TARGET GOAL</b>"], textposition="top center"))
 fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
