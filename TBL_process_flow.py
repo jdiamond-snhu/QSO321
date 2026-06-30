@@ -130,7 +130,7 @@ fig.update_layout(
     yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
     width=800, height=550,
     showlegend=False,
-   margin=dict(l=20, r=20, t=20, b=20)
+   margin=dict(l=20, r=20, t=20, b=20),
 hovermode=False # <-- ADD THIS LINE to kill the crosshair tracking
 )
 
