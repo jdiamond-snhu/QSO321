@@ -29,21 +29,47 @@ if st.sidebar.button("Reset Matrix"):
 # 4. Building the 3-Legged Stool Figure
 fig = go.Figure()
 
-# Add the Seat (Gray Rectangle at the top)
-fig.add_shape(type="rect", x0=1.0, y0=7.0, x1=9.0, y1=8.0,
-              fillcolor="rgba(180, 180, 180, 0.6)", line=dict(color="Gray", width=2))
+# --- 3D OVAL SEAT ASSEMBLY ---
+# A. Top of the seat: A flat horizontal oval surface
+fig.add_shape(
+    type="path",
+    path="M 1.0,7.6 Q 5.0,8.2 9.0,7.6 Q 5.0,7.0 1.0,7.6 Z",
+    fillcolor="rgba(200, 200, 200, 0.9)",
+    line=dict(color="Gray", width=1.5)
+)
 
-# Add People Leg (Light Orange)
-fig.add_shape(type="rect", x0=1.5, y0=1.0, x1=3.5, y1=7.0,
-              fillcolor="rgba(255, 165, 0, 0.4)", line=dict(color="Orange", width=2))
+# B. Front rim of the seat: Gives the seat its 3D depth/thickness
+fig.add_shape(
+    type="path",
+    path="M 1.0,7.6 Q 5.0,7.0 9.0,7.6 L 9.0,7.1 Q 5.0,6.5 1.0,7.1 Z",
+    fillcolor="rgba(160, 160, 160, 1.0)",
+    line=dict(color="Gray", width=1.5)
+)
 
-# Add Planet Leg (Light Blue)
-fig.add_shape(type="rect", x0=4.0, y0=1.0, x1=6.0, y1=7.0,
-              fillcolor="rgba(52, 152, 219, 0.4)", line=dict(color="SkyBlue", width=2))
+# --- THE THREE STOOL LEGS (With Rounded Bottoms) ---
+# 1. People Leg (Light Orange)
+fig.add_shape(
+    type="path",
+    path="M 1.5,7.1 L 1.5,1.3 Q 2.5,0.7 3.5,1.3 L 3.5,7.1 Z",
+    fillcolor="rgba(255, 165, 0, 0.4)", 
+    line=dict(color="Orange", width=2)
+)
 
-# Add Profit Leg (Light Green)
-fig.add_shape(type="rect", x0=6.5, y0=1.0, x1=8.5, y1=7.0,
-              fillcolor="rgba(46, 204, 113, 0.4)", line=dict(color="LightGreen", width=2))
+# 2. Planet Leg (Light Blue)
+fig.add_shape(
+    type="path",
+    path="M 4.0,7.1 L 4.0,1.3 Q 5.0,0.7 6.0,1.3 L 6.0,7.1 Z",
+    fillcolor="rgba(52, 152, 219, 0.4)", 
+    line=dict(color="SkyBlue", width=2)
+)
+
+# 3. Profit Leg (Light Green)
+fig.add_shape(
+    type="path",
+    path="M 6.5,7.1 L 6.5,1.3 Q 7.5,0.7 8.5,1.3 L 8.5,7.1 Z",
+    fillcolor="rgba(46, 204, 113, 0.4)", 
+    line=dict(color="LightGreen", width=2)
+)
 
 # Text Labels for the Legs & Seat
 fig.add_trace(go.Scatter(x=[5.0], y=[7.5], mode="text", text=["SUSTAINABILITY SEAT"], textposition="top center"))
@@ -85,12 +111,12 @@ if click_data:
     cx = click_point["x"]
     cy = click_point["y"]
     
-    # Check what part of the stool was clicked based on X/Y boundaries
+    # Check what part of the stool was clicked based on revised boundaries
     component = "Outside Stool Boundaries"
     
-    if 7.0 <= cy <= 8.0 and 1.0 <= cx <= 9.0:
+    if 6.5 <= cy <= 8.2 and 1.0 <= cx <= 9.0:
         component = "Seat (Balance Area)"
-    elif 1.0 <= cy < 7.0:
+    elif 0.7 <= cy < 6.5:
         if 1.5 <= cx <= 3.5:
             component = "People Leg (Social)"
         elif 4.0 <= cx <= 6.0:
