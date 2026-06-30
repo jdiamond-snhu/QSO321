@@ -4,7 +4,7 @@ from streamlit_plotly_events import plotly_events
 
 # 1. Page Configuration
 st.set_page_config(page_title="TBL Stool Matrix", layout="wide")
-st.title("🪑 Triple Bottom Line Matrix Mapper")
+st.title("🎯 Triple Bottom Line Matrix Mapper")
 st.write("Select a goal from the sidebar to automatically load its strategic TBL configuration, then click on the map to place markers.")
 
 # 2. Define the Static Mapping Data Structure
