@@ -48,8 +48,8 @@ INDUSTRY_SECTOR_DATA = {
         "planet": "Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.",
         "profit": "Lower raw input material procurement costs (COGS) through scrap reductions."
     },
-    "🛎️ Service & Hospitality": {
-        "people": "Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.",
+    "🛎️ Hospitality & Guest Services": {
+        "people": "Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.<br><br>Organize team volunteer days and set up structured surplus food donation programs with local food banks.",
         "planet": "Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.",
         "profit": "Lower overall cost of goods sold (COGS) and variable trash hauling utility costs through strict portion-waste controls."
     },
