@@ -44,24 +44,36 @@ STRATEGIC_GOALS_DATA = {
 # 3. Define the Optional Industry Sector Data Structure
 INDUSTRY_SECTOR_DATA = {
     "🏭 Manufacturing & Production": {
-        "people": "Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.",
-        "planet": "Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.",
-        "profit": "Lower raw input material procurement costs (COGS) through scrap reductions."
+        "people": """🏭 Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.
+🏭 Introduce mandatory hydration and stretching intervals during extended operational shifts.""",
+        "planet": """🏭 Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.
+🏭 Transition facility lighting arrays to high-efficiency industrial LEDs.""",
+        "profit": """🏭 Lower raw input material procurement costs (COGS) through scrap reductions.
+🏭 Deploy predictive machine maintenance routines to drop unexpected assembly downtime."""
     },
     "🛎️ Hospitality & Guest Services": {
-        "people": "Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.<br><br>Organize team volunteer days and set up structured surplus food donation programs with local food banks.",
-        "planet": "Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.",
-        "profit": "Lower overall cost of goods sold (COGS) and variable trash hauling utility costs through strict portion-waste controls."
+        "people": """🛎️ Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.
+🛎️ Organize team volunteer days and set up structured surplus food donation programs with local food banks.""",
+        "planet": """🛎️ Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.
+🛎️ Transition to eco-friendly biodegradable takeout containers and compostable service items.""",
+        "profit": """🛎️ Lower overall cost of goods sold (COGS) and variable trash hauling utility costs through strict portion-waste controls.
+🛎️ Cut corporate water utility outlays by installing sensor-activated commercial dishwashing hardware."""
     },
     "💻 Technology & Digital Services": {
-        "people": "Enforce strict boundaries on async communication to prevent digital fatigue and screen burnout.",
-        "planet": "Optimize raw data infrastructure and cloud asset storage to reduce server farm grid loads.",
-        "profit": "Reduce ongoing infrastructure hosting outlays by removing dead database processing storage."
+        "people": """💻 Enforce strict boundaries on async communication to prevent digital fatigue and screen burnout.
+💻 Allocate dedicated professional development stipends for continuous software engineering upskilling.""",
+        "planet": """💻 Optimize raw data infrastructure and cloud asset storage to reduce server farm grid loads.
+💻 Partner with certified e-waste recyclers to safely decommission and repurpose aging office hardware.""",
+        "profit": """💻 Reduce ongoing infrastructure hosting outlays by removing dead database processing storage.
+💻 Lower corporate overhead by maintaining flexible, hybrid work configurations that compress office square footage needs."""
     },
     "🚚 Logistics & Distribution": {
-        "people": "Optimize regional work dispatch scheduling sheets to guarantee realistic, stress-free road times.",
-        "planet": "Streamline vehicle shipping routes and packaging box dimensions to shrink total carbon burn.",
-        "profit": "Slash overall delivery expenditures per package by slashing empty truck cargo space."
+        "people": """🚚 Optimize regional work dispatch scheduling sheets to guarantee realistic, stress-free road times.
+🚚 Provide comprehensive defensive driving and route safety coaching clinics.""",
+        "planet": """🚚 Streamline vehicle shipping routes and packaging box dimensions to shrink total carbon burn.
+🚚 Transition regional warehouse cargo transport equipment to zero-emission electric forklifts.""",
+        "profit": """🚚 Slash overall delivery expenditures per package by slashing empty truck cargo space.
+🚚 Reduce ongoing fleet insurance premiums by maintaining verifiable safety performance records."""
     }
 }
 
@@ -133,7 +145,7 @@ with center_col:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 Strategic Alignment Matrix Breakdown")
+    st.write(f"### 📋 TBL Allocations:")
     
     # Pre-build text strings with a larger font size for the initial goal text (No bullets)
     people_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['people']}</span>"
