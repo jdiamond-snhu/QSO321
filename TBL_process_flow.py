@@ -125,7 +125,7 @@ if st.session_state.placed_goals:
                 
     with col2:
         st.subheader("🔵 Planet Allocations")
-        for item in item_list := st.session_state.placed_goals:
+        for item in st.session_state.placed_goals:
             if "Planet" in item['component']:
                 st.write(f"* {item['goal']}")
                 
