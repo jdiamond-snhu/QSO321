@@ -46,7 +46,7 @@ if "placed_goals" not in st.session_state:
     st.session_state.placed_goals = []  # Stores manual pins: {'goal': str, 'x': float, 'y': float}
 
 # 4. Sidebar Goal Selection
-st.sidebar.header("1. Choose a Business Goal")
+st.sidebar.header("1. Choose a TBL Business Goal")
 
 # Official method to cleanly collapse label space while remaining accessible
 selected_goal_key = st.sidebar.radio(
