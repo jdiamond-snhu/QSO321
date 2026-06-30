@@ -1,15 +1,15 @@
 import streamlit as st
-import plotly.graph_objects as iplots
+import plotly.graph_objects as go
 from streamlit_plotly_events import plotly_events
 
 # 1. Page Configuration
-st.set_page_config(page_title="Business Goal Matrix", layout="wide")
-st.title("🎯 Business Goal Matrix Mapper")
-st.write("Select a goal from the sidebar, then click on the circular matrix to place it.")
+st.set_page_config(page_title="TBL Stool Matrix", layout="wide")
+st.title("🪑 Triple Bottom Line Matrix Mapper")
+st.write("Select a goal, then click directly on a specific leg or seat of the stool to place it.")
 
 # 2. State Management Initialization
 if "placed_goals" not in st.session_state:
-    st.session_state.placed_goals = []  # Stores dicts: {'goal': str, 'r': float, 'theta': float}
+    st.session_state.placed_goals = []  # Stores: {'goal': str, 'x': float, 'y': float, 'component': str}
 
 # 3. Sidebar Goal Selection
 st.sidebar.header("1. Choose a Business Goal")
@@ -22,81 +22,115 @@ static_goals = [
 ]
 selected_goal = st.sidebar.radio("Active Goal:", static_goals)
 
-# Clear button to reset the matrix
 if st.sidebar.button("Reset Matrix"):
     st.session_state.placed_goals = []
     st.rerun()
 
-# 4. Building the Circular Matrix Visuals
-fig = iplots.Figure()
+# 4. Building the 3-Legged Stool Figure
+fig = go.Figure()
 
-# Background layout: Add concentric circles to define the matrix zones
-radii = [0.3, 0.6, 0.9, 1.0]
-zone_colors = ["rgba(46, 204, 113, 0.1)", "rgba(52, 152, 219, 0.1)", "rgba(155, 89, 182, 0.1)", "rgba(230, 126, 34, 0.1)"]
+# Add the Seat (Gray Rectangle at the top)
+fig.add_shape(type="rect", x0=1.0, y0=7.0, x1=9.0, y1=8.0,
+              fillcolor="rgba(180, 180, 180, 0.6)", line=dict(color="Gray", width=2))
 
-for r, color in zip(radii, zone_colors):
-    fig.add_trace(iplots.Scatterpolar(
-        r=[0, r, r, 0],
-        theta=[0, 0, 360, 0],
-        fill="toself",
-        fillcolor=color,
-        line=dict(color="rgba(255,255,255,0.3)", width=1),
-        mode="lines",
-        showlegend=False,
-        hoverinfo="skip"
-    ))
+# Add People Leg (Light Orange)
+fig.add_shape(type="rect", x0=1.5, y0=1.0, x1=3.5, y1=7.0,
+              fillcolor="rgba(255, 165, 0, 0.4)", line=dict(color="Orange", width=2))
+
+# Add Planet Leg (Light Blue)
+fig.add_shape(type="rect", x0=4.0, y0=1.0, x1=6.0, y1=7.0,
+              fillcolor="rgba(52, 152, 219, 0.4)", line=dict(color="SkyBlue", width=2))
+
+# Add Profit Leg (Light Green)
+fig.add_shape(type="rect", x0=6.5, y0=1.0, x1=8.5, y1=7.0,
+              fillcolor="rgba(46, 204, 113, 0.4)", line=dict(color="LightGreen", width=2))
+
+# Text Labels for the Legs & Seat
+fig.add_trace(go.Scatter(x=[5.0], y=[7.5], mode="text", text=["SUSTAINABILITY SEAT"], textposition="top center"))
+fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social)"], textposition="middle center"))
+fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
+fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
 
 # Plot already placed goals onto the chart
 if st.session_state.placed_goals:
-    goals_r = [item['r'] for item in st.session_state.placed_goals]
-    goals_theta = [item['theta'] for item in st.session_state.placed_goals]
-    goals_text = [item['goal'] for item in st.session_state.placed_goals]
+    goals_x = [item['x'] for item in st.session_state.placed_goals]
+    goals_y = [item['y'] for item in st.session_state.placed_goals]
+    goals_text = [f"{item['goal']}<br>({item['component']})" for item in st.session_state.placed_goals]
     
-    fig.add_trace(iplots.Scatterpolar(
-        r=goals_r,
-        theta=goals_theta,
+    fig.add_trace(go.Scatter(
+        x=goals_x, y=goals_y,
         mode="markers+text",
         text=goals_text,
-        textposition="top center",
-        marker=dict(size=14, color="#E74C3C", symbol="triangle-up"),
+        textposition="bottom center",
+        marker=dict(size=14, color="#E74C3C", symbol="circle"),
         name="Placed Goals"
     ))
 
-# Polar Chart Formatting
+# Graph Grid and Interactivity Settings
 fig.update_layout(
-    polar=dict(
-        radialaxis=dict(visible=True, range=[0, 1], tickvals=[0.3, 0.6, 0.9]),
-        angularaxis=dict(visible=True, direction="counterclockwise", period=360)
-    ),
-    width=700,
-    height=700,
+    xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
+    yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
+    width=800, height=550,
     showlegend=False,
-    margin=dict(l=40, r=40, t=40, b=40)
+    margin=dict(l=20, r=20, t=20, b=20),
+    clickmode="event+select"
 )
 
-# 5. Capture Click Events and Update State
-st.subheader("2. Click on the Matrix to Place Goal")
-click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=700, override_width="100%")
+# 5. Capture Click Events and Determine Location
+st.subheader("2. Interactive TBL Map")
+click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=550, override_width="100%")
 
-# If the user clicks the map, save the goal coordinates and refresh
 if click_data:
     click_point = click_data[0]
+    cx = click_point["x"]
+    cy = click_point["y"]
     
-    # Simple check to filter out clicks on existing markers
-    if click_point.get('curveNumber') == 0 or click_point.get('curveNumber') is not None:
+    # Check what part of the stool was clicked based on X/Y boundaries
+    component = "Outside Stool Boundaries"
+    
+    if 7.0 <= cy <= 8.0 and 1.0 <= cx <= 9.0:
+        component = "Seat (Balance Area)"
+    elif 1.0 <= cy < 7.0:
+        if 1.5 <= cx <= 3.5:
+            component = "People Leg (Social)"
+        elif 4.0 <= cx <= 6.0:
+            component = "Planet Leg (Environmental)"
+        elif 6.5 <= cx <= 8.5:
+            component = "Profit Leg (Economic)"
+            
+    # Save target placement if it falls inside a leg or seat
+    if component != "Outside Stool Boundaries":
         new_placement = {
             "goal": selected_goal,
-            "r": click_point["r"],
-            "theta": click_point["theta"]
+            "x": cx,
+            "y": cy,
+            "component": component
         }
-        
-        # Append to our session state list
         st.session_state.placed_goals.append(new_placement)
-        st.toast(f"Placed: {selected_goal}!", icon="🎯")
+        st.toast(f"Assigned to {component}!", icon="🎯")
         st.rerun()
+    else:
+        st.warning("Click directly on one of the stool components to register the goal alignment.")
 
 # 6. Dynamic Text Output Breakdown
 if st.session_state.placed_goals:
-    st.write("### Matrix Composition Breakdown")
-    for idx, item in enumerate(st.session_state.placed_goals):
-        st.write(f"**Goal {idx+1}:** {item['goal']} (Distance from center: `{item['r']:.2f}`, Angle: `{item['theta']:.1f}°`)")
+    st.write("### Current Strategic Alignment")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.subheader("🟠 People Allocations")
+        for item in st.session_state.placed_goals:
+            if "People" in item['component']:
+                st.write(f"* {item['goal']}")
+                
+    with col2:
+        st.subheader("🔵 Planet Allocations")
+        for item in item_list := st.session_state.placed_goals:
+            if "Planet" in item['component']:
+                st.write(f"* {item['goal']}")
+                
+    with col3:
+        st.subheader("🟢 Profit Allocations")
+        for item in st.session_state.placed_goals:
+            if "Profit" in item['component']:
+                st.write(f"* {item['goal']}")
