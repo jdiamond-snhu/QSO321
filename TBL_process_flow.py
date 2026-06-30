@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="TBL Stool Matrix", layout="wide", page_icon="🎯")
 st.title("🎯 Triple Bottom Line Matrix Mapper")
 st.write("**Directions:** Select your TBL Business Goal from the sidebar to automatically map its configuration. **Optional:** Choose an industry to load its suggested operational modifications.")
+st.write("**Optional:** For more detail, choose a specific industry to load its suggested operational modifications.")
 
 # 2. Define the Universal Strategic Goals Data Structure
 STRATEGIC_GOALS_DATA = {
