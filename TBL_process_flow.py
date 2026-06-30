@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 # 1. Page Configuration
 st.set_page_config(page_title="TBL Stool Matrix", layout="wide", page_icon="🎯")
 st.title("🎯 Triple Bottom Line Matrix Mapper")
-st.write("Select a goal from the sidebar to automatically load its strategic TBL configuration. Optional: Add an industry sector to see direct operational tasks.")
+st.write("**Directions:** Select a TBL Business Goal from the sidebar to load baseline strategic configuration. **Optional:** Add an industry sector to add industry-specific operational tasks.")
 
 # 2. Define the Universal Strategic Goals Data Structure
 STRATEGIC_GOALS_DATA = {
@@ -36,7 +36,7 @@ STRATEGIC_GOALS_DATA = {
         "symbol": "⚡",
         "people": "Ergonomic workspace updates to prevent operational repetitive strain injuries.",
         "planet": "Upgrading facilities to smart IoT-managed renewable energy grids.",
-        "profit": "Streamlining manufacturing supply chains to cut waste overhead costs by 15%."
+        "profit": "Streamlining manufacturing supply chains to cut waste overhead costs."
     }
 }
 
@@ -78,7 +78,7 @@ INDUSTRY_SECTOR_DATA = {
 }
 
 # 4. Sidebar Configuration
-st.sidebar.header("1. Choose a Business Goal")
+st.sidebar.header("1. Choose a TBL Business Goal")
 selected_goal_key = st.sidebar.radio(
     "Goal Selector", 
     list(STRATEGIC_GOALS_DATA.keys()),
@@ -86,7 +86,7 @@ selected_goal_key = st.sidebar.radio(
     label_visibility="collapsed"
 )
 
-st.sidebar.header("2. Add Industry Filter (**Optional**)")
+st.sidebar.header("2. Optional: Choose an industry")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
     ["None (View Universal Strategy)"] + list(INDUSTRY_SECTOR_DATA.keys()),
