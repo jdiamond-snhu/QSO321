@@ -133,17 +133,18 @@ with center_col:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 TBL Business Goal Allocation: ")
+    st.write(f"### 📋 Strategic Alignment Matrix Breakdown")
     
-    # Pre-build bullet strings based on whether an industry is selected
-    people_bullets = f"• {active_goal_info['people']}"
-    planet_bullets = f"• {active_goal_info['planet']}"
-    profit_bullets = f"• {active_goal_info['profit']}"
+    # Pre-build text strings with a larger font size for the initial goal text (No bullets)
+    people_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['people']}</span>"
+    planet_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['planet']}</span>"
+    profit_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['profit']}</span>"
     
+    # Append the optional industry text at a slightly smaller, regular size
     if has_industry:
-        people_bullets += f"<br><br>• <b>{selected_industry_key}:</b> {active_industry_info['people']}"
-        planet_bullets += f"<br><br>• <b>{selected_industry_key}:</b> {active_industry_info['planet']}"
-        profit_bullets += f"<br><br>• <b>{selected_industry_key}:</b> {active_industry_info['profit']}"
+        people_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['people']}</span>"
+        planet_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['planet']}</span>"
+        profit_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['profit']}</span>"
 
     col1, col2, col3 = st.columns(3)
     
