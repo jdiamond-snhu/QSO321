@@ -134,29 +134,8 @@ fig.update_layout(
     clickmode="event+select"
 )
 
-# 6. Capture Click Events (Without Redundant Label)
-click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=550, override_width="100%")
-
-if click_data:
-    click_point = click_data
-    cx = click_point["x"]
-    cy = click_point["y"]
-    
-    component = "Outside Stool Boundaries"
-    if 6.5 <= cy <= 9.5 and 1.0 <= cx <= 9.0:
-        component = "Seat"
-    elif 0.7 <= cy < 6.5:
-        if 1.5 <= cx <= 3.5:
-            component = "People"
-        elif 4.0 <= cx <= 6.0:
-            component = "Planet"
-        elif 6.5 <= cx <= 8.5:
-            component = "Profit"
-            
-    if component != "Outside Stool Boundaries":
-        st.session_state.placed_goals.append({"goal": active_emoji, "x": cx, "y": cy})
-        st.toast(f"Pinned marker to {component}!", icon="📍")
-        st.rerun()
+# 6. Render the Clean Stool Graphic
+st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
