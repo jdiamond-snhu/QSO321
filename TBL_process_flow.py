@@ -130,8 +130,7 @@ fig.update_layout(
     yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
     width=800, height=550,
     showlegend=False,
-    margin=dict(l=20, r=20, t=20, b=20),
-    clickmode="event+select"
+   margin=dict(l=20, r=20, t=20, b=20)
 )
 
 # 6. Render the Clean Stool Graphic
