@@ -4,8 +4,7 @@ import plotly.graph_objects as go
 # 1. Page Configuration
 st.set_page_config(page_title="TBL Stool Matrix", layout="wide", page_icon="🎯")
 st.title("🎯 Triple Bottom Line Matrix Mapper")
-st.write("**Directions:** Select your TBL Business Goal from the sidebar to automatically map its configuration.")
-st.write("**Optional:** For more detail, choose a specific industry to load its suggested operational additions.")
+st.write("Select a goal from the sidebar to automatically load its strategic TBL configuration. Optional: Add an industry sector to see direct operational tasks.")
 
 # 2. Define the Universal Strategic Goals Data Structure
 STRATEGIC_GOALS_DATA = {
@@ -42,6 +41,7 @@ STRATEGIC_GOALS_DATA = {
 }
 
 # 3. Define the Optional Industry Sector Data Structure
+# Multi-line strings are used here. Each row starts with exactly one industry emoji.
 INDUSTRY_SECTOR_DATA = {
     "🏭 Manufacturing & Production": {
         "people": """🏭 Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.
@@ -51,7 +51,7 @@ INDUSTRY_SECTOR_DATA = {
         "profit": """🏭 Lower raw input material procurement costs (COGS) through scrap reductions.
 🏭 Deploy predictive machine maintenance routines to drop unexpected assembly downtime."""
     },
-   "🛎️ Hospitality & Guest Services": {
+    "🛎️ Hospitality & Guest Services": {
         "people": """🛎️ Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.
 🛎️ Organize team volunteer days and set up structured surplus food donation programs with local food banks.""",
         "planet": """🛎️ Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.
@@ -78,7 +78,7 @@ INDUSTRY_SECTOR_DATA = {
 }
 
 # 4. Sidebar Configuration
-st.sidebar.header("1. Choose a TBL Business Goal")
+st.sidebar.header("1. Choose a Business Goal")
 selected_goal_key = st.sidebar.radio(
     "Goal Selector", 
     list(STRATEGIC_GOALS_DATA.keys()),
@@ -86,8 +86,7 @@ selected_goal_key = st.sidebar.radio(
     label_visibility="collapsed"
 )
 
-# Optional Step 2 Interface with bold Markdown tag
-st.sidebar.header("2. Choose an Industry")
+st.sidebar.header("2. Add Industry Filter (**Optional**)")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
     ["None (View Universal Strategy)"] + list(INDUSTRY_SECTOR_DATA.keys()),
@@ -102,7 +101,6 @@ else:
     active_goal_info = None
     active_emoji = "❓"
 
-# Determine if the optional industry details should load
 has_industry = selected_industry_key != "None (View Universal Strategy)"
 if has_industry:
     active_industry_info = INDUSTRY_SECTOR_DATA[selected_industry_key]
@@ -133,7 +131,7 @@ fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Econom
 
 fig.update_layout(
     xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
-    yaxis=dict(range=[0, 11], showgrid=False, zeroline=False, visible=False),
+    yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
     width=800, height=550, showlegend=False,
     margin=dict(l=20, r=20, t=20, b=20), hovermode=False
 )
@@ -145,18 +143,19 @@ with center_col:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 TBL Allocations:")
+    st.write(f"### 📋 Strategic Alignment Matrix Breakdown")
     
-    # Pre-build text strings with a larger font size for the initial goal text (No bullets)
-    people_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['people']}</span>"
-    planet_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['planet']}</span>"
-    profit_bullets = f"<span style='font-size: 17px; font-weight: 500;'>{active_goal_info['profit']}</span>"
+    # Establish base font layer sizes for the core target goal text (No bullets)
+    people_bullets = f"<div style='font-size: 17px; font-weight: 500; margin-bottom: 15px;'>{active_goal_info['people']}</div>"
+    planet_bullets = f"<div style='font-size: 17px; font-weight: 500; margin-bottom: 15px;'>{active_goal_info['planet']}</div>"
+    profit_bullets = f"<div style='font-size: 17px; font-weight: 500; margin-bottom: 15px;'>{active_goal_info['profit']}</div>"
     
-    # Append the optional industry text at a slightly smaller, regular size
+    # Add a bold, structural line break separating the sections if an industry is active
     if has_industry:
-        people_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['people']}</span>"
-        planet_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['planet']}</span>"
-        profit_bullets += f"<br><br><span style='font-size: 15px; color: #555555;'><b>{selected_industry_key}:</b> {active_industry_info['profit']}</span>"
+        # Formats the text blocks to respect row-by-row line breaks perfectly
+        people_bullets += f"<div style='border-top: 1px dashed orange; padding-top: 10px; font-size: 15px; color: #555555; white-space: pre-line;'><b>{selected_industry_key}:</b>\n{active_industry_info['people']}</div>"
+        planet_bullets += f"<div style='border-top: 1px dashed #3498db; padding-top: 10px; font-size: 15px; color: #555555; white-space: pre-line;'><b>{selected_industry_key}:</b>\n{active_industry_info['planet']}</div>"
+        profit_bullets += f"<div style='border-top: 1px dashed #2ecc71; padding-top: 10px; font-size: 15px; color: #555555; white-space: pre-line;'><b>{selected_industry_key}:</b>\n{active_industry_info['profit']}</div>"
 
     col1, col2, col3 = st.columns(3)
     
