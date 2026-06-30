@@ -127,7 +127,7 @@ with center_col:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 Strategic Alignment Matrix Breakdown")
+    st.write(f"### 📋 TBL Business Goal Allocation: ")
     
     # Pre-build bullet strings based on whether an industry is selected
     people_bullets = f"• {active_goal_info['people']}"
@@ -144,7 +144,7 @@ if selected_goal_key is not None:
     with col1:
         st.markdown(f"""
             <div style="border: 2px solid orange; padding: 15px; border-radius: 8px; background-color: rgba(255, 165, 0, 0.05); min-height: 220px;">
-                <h3 style="color: darkorange; margin-top: 0;">2.1. People Allocation</h3>
+                <h3 style="color: darkorange; margin-top: 0;">🟠 People</h3>
                 <p style="font-size: 15px; color: #333333; line-height: 1.4;">{people_bullets}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -152,7 +152,7 @@ if selected_goal_key is not None:
     with col2:
         st.markdown(f"""
             <div style="border: 2px solid #3498db; padding: 15px; border-radius: 8px; background-color: rgba(52, 152, 219, 0.05); min-height: 220px;">
-                <h3 style="color: #2980b9; margin-top: 0;">2.2. Planet Allocation</h3>
+                <h3 style="color: #2980b9; margin-top: 0;">🔵 Planet</h3>
                 <p style="font-size: 15px; color: #333333; line-height: 1.4;">{planet_bullets}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -160,7 +160,7 @@ if selected_goal_key is not None:
     with col3:
         st.markdown(f"""
             <div style="border: 2px solid #2ecc71; padding: 15px; border-radius: 8px; background-color: rgba(46, 204, 113, 0.05); min-height: 220px;">
-                <h3 style="color: #27ae60; margin-top: 0;">2.3. Profit Allocation</h3>
+                <h3 style="color: #27ae60; margin-top: 0;">🟢 Profit</h3>
                 <p style="font-size: 15px; color: #333333; line-height: 1.4;">{profit_bullets}</p>
             </div>
             """, unsafe_allow_html=True)
