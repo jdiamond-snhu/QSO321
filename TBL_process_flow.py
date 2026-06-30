@@ -179,7 +179,7 @@ with col1:
             <p style="font-size: 16px; color: #333333;">{active_goal_info["people"]}</p>
         </div>
         """, 
-        unsafe_allowed_html=True
+        unsafe_allow_html=True
     )
     
 with col2:
@@ -190,7 +190,7 @@ with col2:
             <p style="font-size: 16px; color: #333333;">{active_goal_info["planet"]}</p>
         </div>
         """, 
-        unsafe_allowed_html=True
+        unsafe_allow_html=True
     )
     
 with col3:
@@ -201,5 +201,5 @@ with col3:
             <p style="font-size: 16px; color: #333333;">{active_goal_info["profit"]}</p>
         </div>
         """, 
-        unsafe_allowed_html=True
+        unsafe_allow_html=True
     )
