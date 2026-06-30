@@ -134,8 +134,12 @@ fig.update_layout(
 hovermode=False # <-- ADD THIS LINE to kill the crosshair tracking
 )
 
-# 6. Render the Clean Stool Graphic as a static asset
-st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False, 'staticPlot': True})
+# 6. Render the Clean Stool Graphic (Condensed and Centered)
+# Creates an empty column on the left (20%), main center column (60%), and empty right column (20%)
+left_spacer, center_col, right_spacer = st.columns([0.2, 0.6, 0.2])
+
+with center_col:
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False, 'staticPlot': True})
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
