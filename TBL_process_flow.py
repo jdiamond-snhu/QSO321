@@ -29,24 +29,7 @@ if st.sidebar.button("Reset Matrix"):
 # 4. Building the 3-Legged Stool Figure
 fig = go.Figure()
 
-# --- 3D OVAL SEAT ASSEMBLY ---
-# A. Top of the seat: A flat horizontal oval surface
-fig.add_shape(
-    type="path",
-    path="M 1.0,7.6 Q 5.0,8.2 9.0,7.6 Q 5.0,7.0 1.0,7.6 Z",
-    fillcolor="rgba(200, 200, 200, 0.9)",
-    line=dict(color="Gray", width=1.5)
-)
-
-# B. Front rim of the seat: Gives the seat its 3D depth/thickness
-fig.add_shape(
-    type="path",
-    path="M 1.0,7.6 Q 5.0,7.0 9.0,7.6 L 9.0,7.1 Q 5.0,6.5 1.0,7.1 Z",
-    fillcolor="rgba(160, 160, 160, 1.0)",
-    line=dict(color="Gray", width=1.5)
-)
-
-# --- THE THREE STOOL LEGS (With Rounded Bottoms) ---
+# --- STEP 1: THE THREE STOOL LEGS (Drawn First / Sent to Back) ---
 # 1. People Leg (Light Orange)
 fig.add_shape(
     type="path",
@@ -71,11 +54,32 @@ fig.add_shape(
     line=dict(color="LightGreen", width=2)
 )
 
+
+# --- STEP 2: 3D OVAL SEAT ASSEMBLY (Drawn Last / Brought to Front) ---
+# A. Top of the seat: A flat horizontal oval surface
+fig.add_shape(
+    type="path",
+    path="M 1.0,7.6 Q 5.0,8.2 9.0,7.6 Q 5.0,7.0 1.0,7.6 Z",
+    fillcolor="rgba(200, 200, 200, 0.9)",
+    line=dict(color="Gray", width=1.5)
+)
+
+# B. Front rim of the seat: Gives the seat its 3D depth/thickness and covers the leg tops
+fig.add_shape(
+    type="path",
+    path="M 1.0,7.6 Q 5.0,7.0 9.0,7.6 L 9.0,7.1 Q 5.0,6.5 1.0,7.1 Z",
+    fillcolor="rgba(160, 160, 160, 1.0)",
+    line=dict(color="Gray", width=1.5)
+)
+
+
+# --- STEP 3: TEXT LABELS AND PLACED GOALS ---
 # Text Labels for the Legs & Seat
 fig.add_trace(go.Scatter(x=[5.0], y=[7.5], mode="text", text=["SUSTAINABILITY SEAT"], textposition="top center"))
 fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
+
 
 # Plot already placed goals onto the chart
 if st.session_state.placed_goals:
