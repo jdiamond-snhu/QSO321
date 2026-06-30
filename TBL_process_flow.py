@@ -142,8 +142,8 @@ if st.session_state.placed_goals:
 
 # Graph Grid and Interactivity Settings
 fig.update_layout(
-    xaxis=dict(range=, showgrid=False, zeroline=False, visible=False),
-    yaxis=dict(range=, showgrid=False, zeroline=False, visible=False),
+    xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
+    yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
     width=800, height=550,
     showlegend=False,
     margin=dict(l=20, r=20, t=20, b=20),
