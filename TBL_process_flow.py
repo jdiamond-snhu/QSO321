@@ -56,10 +56,6 @@ selected_goal_key = st.sidebar.radio(
     label_visibility="collapsed"
 )
 
-if st.sidebar.button("Reset"):
-    st.session_state.placed_goals = []
-    st.rerun()
-
 # --- SAFE BLOCK POSITIONING ---
 # Handle the empty/None initial state before constructing the visual chart
 if selected_goal_key is not None:
