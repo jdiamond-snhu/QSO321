@@ -143,7 +143,7 @@ with center_col:
 
 # 7. Dynamic Strategic Alignment Output
 if selected_goal_key is not None:
-    st.write(f"### 📋 Strategic Alignment Matrix Breakdown")
+    st.write(f"### 📋 TBL Allocation(s):")
     
     # Establish base font layer sizes for the core target goal text (No bullets)
     people_bullets = f"<div style='font-size: 17px; font-weight: 500; margin-bottom: 15px;'>{active_goal_info['people']}</div>"
