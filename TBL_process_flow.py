@@ -8,7 +8,6 @@ st.title("🪑 Triple Bottom Line Matrix Mapper")
 st.write("Select a goal from the sidebar to automatically load its strategic TBL configuration, then click on the map to place markers.")
 
 # 2. Define the Static Mapping Data Structure
-# Each goal contains its display label, its core symbol, and its hardcoded TBL alignments.
 STRATEGIC_GOALS_DATA = {
     "🚀 Scale Revenue": {
         "symbol": "🚀",
@@ -44,12 +43,12 @@ STRATEGIC_GOALS_DATA = {
 
 # 3. State Management Initialization
 if "placed_goals" not in st.session_state:
-    st.session_state.placed_goals = []  # Stores manual user clicks: {'goal': str, 'x': float, 'y': float, 'component': str}
+    st.session_state.placed_goals = []  # Stores manual pins: {'goal': str, 'x': float, 'y': float}
 
 # 4. Sidebar Goal Selection
 st.sidebar.header("1. Choose a Business Goal")
 
-# Setting index=None forces the radio list to start empty
+# Official method to cleanly collapse label space while remaining accessible
 selected_goal_key = st.sidebar.radio(
     "Active Goal Selector", 
     list(STRATEGIC_GOALS_DATA.keys()),
@@ -57,10 +56,18 @@ selected_goal_key = st.sidebar.radio(
     label_visibility="collapsed"
 )
 
-# Simplified the button label to just "Reset"
 if st.sidebar.button("Reset"):
     st.session_state.placed_goals = []
     st.rerun()
+
+# --- SAFE BLOCK POSITIONING ---
+# Handle the empty/None initial state before constructing the visual chart
+if selected_goal_key is not None:
+    active_goal_info = STRATEGIC_GOALS_DATA[selected_goal_key]
+    active_emoji = active_goal_info["symbol"]
+else:
+    active_goal_info = None
+    active_emoji = "❓"  # Clear visual placeholder for accessibility
 
 # 5. Building the 3-Legged Stool Figure
 fig = go.Figure()
@@ -85,7 +92,7 @@ fig.add_shape(
     line=dict(color="LightGreen", width=2)
 )
 
-# --- STEP 2: 3D OVAL SEAT ASSEMBLY ---
+# --- STEP 2: 3D OVAL SEAT ASSEMBLY (Drawn Over Leg Tops) ---
 fig.add_shape(
     type="path",
     path="M 1.0,7.6 Q 5.0,8.2 9.0,7.6 Q 5.0,7.0 1.0,7.6 Z",
@@ -121,11 +128,10 @@ fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
 
-# Plot user-clicked custom markers onto the chart if they want to physically pin them
+# Plot user-clicked custom markers onto the chart if they click the canvas
 if st.session_state.placed_goals:
     goals_x = [item['x'] for item in st.session_state.placed_goals]
     goals_y = [item['y'] for item in st.session_state.placed_goals]
-    goals_text = [f"{item['goal']}" for item in st.session_state.placed_goals]
     
     fig.add_trace(go.Scatter(
         x=goals_x, y=goals_y,
@@ -136,19 +142,19 @@ if st.session_state.placed_goals:
 
 # Graph Grid and Interactivity Settings
 fig.update_layout(
-    xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
-    yaxis=dict(range=[0, 11], showgrid=False, zeroline=False, visible=False),
+    xaxis=dict(range=, showgrid=False, zeroline=False, visible=False),
+    yaxis=dict(range=, showgrid=False, zeroline=False, visible=False),
     width=800, height=550,
     showlegend=False,
     margin=dict(l=20, r=20, t=20, b=20),
     clickmode="event+select"
 )
 
-# 6. Optional: Capture Click Events (Preserving mapping mechanics)
+# 6. Capture Click Events (Without Redundant Label)
 click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=550, override_width="100%")
 
 if click_data:
-    click_point = click_data[0]
+    click_point = click_data
     cx = click_point["x"]
     cy = click_point["y"]
     
@@ -173,6 +179,7 @@ if selected_goal_key is not None:
     st.write(f"### 📋 Triple Bottom Line Alignment: {selected_goal_key}")
     
     col1, col2, col3 = st.columns(3)
+    
     with col1:
         st.markdown(f"""
             <div style="border: 2px solid orange; padding: 15px; border-radius: 8px; background-color: rgba(255, 165, 0, 0.05); min-height: 150px;">
@@ -180,7 +187,7 @@ if selected_goal_key is not None:
                 <p style="font-size: 16px; color: #333333;">{active_goal_info["people"]}</p>
             </div>
             """, unsafe_allow_html=True)
-        
+            
     with col2:
         st.markdown(f"""
             <div style="border: 2px solid #3498db; padding: 15px; border-radius: 8px; background-color: rgba(52, 152, 219, 0.05); min-height: 150px;">
@@ -188,7 +195,7 @@ if selected_goal_key is not None:
                 <p style="font-size: 16px; color: #333333;">{active_goal_info["planet"]}</p>
             </div>
             """, unsafe_allow_html=True)
-        
+            
     with col3:
         st.markdown(f"""
             <div style="border: 2px solid #2ecc71; padding: 15px; border-radius: 8px; background-color: rgba(46, 204, 113, 0.05); min-height: 150px;">
@@ -198,4 +205,3 @@ if selected_goal_key is not None:
             """, unsafe_allow_html=True)
 else:
     st.info("💡 Please select a business goal from the sidebar to view its Triple Bottom Line alignment details.")
-
