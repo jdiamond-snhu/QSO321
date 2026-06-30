@@ -5,28 +5,60 @@ from streamlit_plotly_events import plotly_events
 # 1. Page Configuration
 st.set_page_config(page_title="TBL Stool Matrix", layout="wide")
 st.title("🪑 Triple Bottom Line Matrix Mapper")
-st.write("Select a goal, then click directly on a specific leg or seat of the stool to place it.")
+st.write("Select a goal from the sidebar to automatically load its strategic TBL configuration, then click on the map to place markers.")
 
-# 2. State Management Initialization
+# 2. Define the Static Mapping Data Structure
+# Each goal contains its display label, its core symbol, and its hardcoded TBL alignments.
+STRATEGIC_GOALS_DATA = {
+    "🚀 Scale Revenue": {
+        "symbol": "🚀",
+        "people": "Fair compensation structures to increase sales productivity.",
+        "planet": "Digital invoicing transitions to eliminate corporate paper waste.",
+        "profit": "Direct expansion into high-margin emerging market segments."
+    },
+    "👥 Improve Retention": {
+        "symbol": "👥",
+        "people": "Flexible work schedules and comprehensive mental wellness plans.",
+        "planet": "Subsidized public transit passes to reduce employee commute footprint.",
+        "profit": "Drastic reduction in expensive employee recruitment and onboarding costs."
+    },
+    "🛠️ Reduce Technical Debt": {
+        "symbol": "🛠️",
+        "people": "Upskilling development teams to eliminate daily frustration and burnout.",
+        "planet": "Migrating to green cloud data centers with optimized code execution.",
+        "profit": "Lowering long-term software infrastructure maintenance expenditures."
+    },
+    "🌍 Expand Market Share": {
+        "symbol": "🌍",
+        "people": "Localized community hiring initiatives for new distribution centers.",
+        "planet": "Transitioning global shipping lanes to use eco-friendly biofuel carriers.",
+        "profit": "Increasing overarching volume sales to establish a dominant market presence."
+    },
+    "⚡ Optimize Operations": {
+        "symbol": "⚡",
+        "people": "Ergonomic workspace updates to prevent operational repetitive strain injuries.",
+        "planet": "Upgrading facilities to smart IoT-managed renewable energy grids.",
+        "profit": "Streamlining manufacturing supply chains to cut waste overhead costs by 15%."
+    }
+}
+
+# 3. State Management Initialization
 if "placed_goals" not in st.session_state:
-    st.session_state.placed_goals = []  # Stores: {'goal': str, 'x': float, 'y': float, 'component': str}
+    st.session_state.placed_goals = []  # Stores manual user clicks: {'goal': str, 'x': float, 'y': float, 'component': str}
 
-# 3. Sidebar Goal Selection
+# 4. Sidebar Goal Selection
 st.sidebar.header("1. Choose a Business Goal")
-static_goals = [
-    "🚀 Scale Revenue",
-    "👥 Improve Retention",
-    "🛠️ Reduce Technical Debt",
-    "🌍 Expand Market Share",
-    "⚡ Optimize Operations"
-]
-selected_goal = st.sidebar.radio("Active Goal:", static_goals)
+selected_goal_key = st.sidebar.radio("Active Goal:", list(STRATEGIC_GOALS_DATA.keys()))
 
-if st.sidebar.button("Reset Matrix"):
+# Extract data for the actively selected goal
+active_goal_info = STRATEGIC_GOALS_DATA[selected_goal_key]
+active_emoji = active_goal_info["symbol"]
+
+if st.sidebar.button("Reset Placed Markers"):
     st.session_state.placed_goals = []
     st.rerun()
 
-# 4. Building the 3-Legged Stool Figure
+# 5. Building the 3-Legged Stool Figure
 fig = go.Figure()
 
 # --- STEP 1: THE THREE STOOL LEGS (Drawn First / Sent to Back) ---
@@ -49,7 +81,6 @@ fig.add_shape(
     line=dict(color="LightGreen", width=2)
 )
 
-
 # --- STEP 2: 3D OVAL SEAT ASSEMBLY ---
 fig.add_shape(
     type="path",
@@ -64,77 +95,53 @@ fig.add_shape(
     line=dict(color="Gray", width=1.5)
 )
 
-
-# --- STEP 3: WHIMSICAL CARGO BOX (Sitting on the Seat) ---
-# Front-Left Face of the Box (Shaded darker cardboard brown)
+# --- STEP 3: ACCESSIBLE 2D CARGO BOX (Unfilled Bounding Box) ---
 fig.add_shape(
-    type="path",
-    path="M 5.0,7.6 L 4.2,8.0 L 4.2,9.0 L 5.0,8.6 Z",
-    fillcolor="rgba(180, 130, 90, 1.0)",
-    line=dict(color="rgb(130, 90, 50)", width=1.5)
-)
-# Front-Right Face of the Box (Lighter cardboard brown)
-fig.add_shape(
-    type="path",
-    path="M 5.0,7.6 L 5.8,8.0 L 5.8,9.0 L 5.0,8.6 Z",
-    fillcolor="rgba(210, 160, 110, 1.0)",
-    line=dict(color="rgb(150, 100, 60)", width=1.5)
-)
-# Top Flaps Face of the Box
-fig.add_shape(
-    type="path",
-    path="M 5.0,8.6 L 4.2,9.0 L 5.0,9.4 L 5.8,9.0 Z",
-    fillcolor="rgba(230, 180, 130, 1.0)",
-    line=dict(color="rgb(160, 110, 70)", width=1.5)
+    type="rect",
+    x0=4.0, y0=7.6, x1=6.0, y1=9.3,
+    fillcolor="rgba(0,0,0,0)",
+    line=dict(color="#333333", width=2.5, dash="dash")
 )
 
-
-# --- STEP 4: TEXT LABELS AND PLACED GOALS ---
-# Dynamic Symbol / Emoji Placement Inside the Box
-# Grabs the first character (the emoji) from the user's active goal string
-active_emoji = selected_goal[0] if selected_goal else "📦"
+# --- STEP 4: TEXT LABELS AND DYNAMIC SYMBOL ---
 fig.add_trace(go.Scatter(
-    x=[5.0], y=[8.4], 
+    x=[5.0], y=[8.45], 
     mode="text", 
-    text=[f"<span style='font-size:32px;'>{active_emoji}</span>"], 
+    text=[f"<span style='font-size:36px;'>{active_emoji}</span>"], 
     textposition="middle center"
 ))
 
-# Labels for the Legs & Seat (Moved seat text higher to avoid the box)
+# Labels for the Legs & Seat
 fig.add_trace(go.Scatter(x=[5.0], y=[9.7], mode="text", text=["<b>SUSTAINABILITY LOAD</b>"], textposition="top center"))
 fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
 
-
-
-# Plot already placed goals onto the chart
+# Plot user-clicked custom markers onto the chart if they want to physically pin them
 if st.session_state.placed_goals:
     goals_x = [item['x'] for item in st.session_state.placed_goals]
     goals_y = [item['y'] for item in st.session_state.placed_goals]
-    goals_text = [f"{item['goal']}<br>({item['component']})" for item in st.session_state.placed_goals]
+    goals_text = [f"{item['goal']}" for item in st.session_state.placed_goals]
     
     fig.add_trace(go.Scatter(
         x=goals_x, y=goals_y,
-        mode="markers+text",
-        text=goals_text,
-        textposition="bottom center",
+        mode="markers",
         marker=dict(size=14, color="#E74C3C", symbol="circle"),
-        name="Placed Goals"
+        name="User Pins"
     ))
 
 # Graph Grid and Interactivity Settings
 fig.update_layout(
     xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
-    yaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
+    yaxis=dict(range=[0, 11], showgrid=False, zeroline=False, visible=False),
     width=800, height=550,
     showlegend=False,
     margin=dict(l=20, r=20, t=20, b=20),
     clickmode="event+select"
 )
 
-# 5. Capture Click Events and Determine Location
-st.subheader("2. Interactive TBL Map")
+# 6. Optional: Capture Click Events (Preserving mapping mechanics)
+st.subheader("2. TBL Interactive Map View")
 click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=550, override_width="100%")
 
 if click_data:
@@ -142,53 +149,57 @@ if click_data:
     cx = click_point["x"]
     cy = click_point["y"]
     
-        # Check what part of the stool was clicked based on revised boundaries
     component = "Outside Stool Boundaries"
-    
-    # Expanded y-range to 9.5 to accommodate clicking on the payload box
     if 6.5 <= cy <= 9.5 and 1.0 <= cx <= 9.0:
-        component = "Seat (Balance Area)"
+        component = "Seat"
     elif 0.7 <= cy < 6.5:
         if 1.5 <= cx <= 3.5:
-            component = "People Leg (Social)"
+            component = "People"
         elif 4.0 <= cx <= 6.0:
-            component = "Planet Leg (Environmental)"
+            component = "Planet"
         elif 6.5 <= cx <= 8.5:
-            component = "Profit Leg (Economic)"
+            component = "Profit"
             
-    # Save target placement if it falls inside a leg or seat
     if component != "Outside Stool Boundaries":
-        new_placement = {
-            "goal": selected_goal,
-            "x": cx,
-            "y": cy,
-            "component": component
-        }
-        st.session_state.placed_goals.append(new_placement)
-        st.toast(f"Assigned to {component}!", icon="🎯")
+        st.session_state.placed_goals.append({"goal": active_emoji, "x": cx, "y": cy})
+        st.toast(f"Pinned marker to {component}!", icon="📍")
         st.rerun()
-    else:
-        st.warning("Click directly on one of the stool components to register the goal alignment.")
 
-# 6. Dynamic Text Output Breakdown
-if st.session_state.placed_goals:
-    st.write("### Current Strategic Alignment")
-    col1, col2, col3 = st.columns(3)
+# 7. Dynamic Strategic Alignment Output
+st.write(f"### 📋 Triple Bottom Line Alignment: {selected_goal_key}")
+
+# Render high-contrast containers using standard Streamlit columns
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown(
+        f"""
+        <div style="border: 2px solid orange; padding: 15px; border-radius: 8px; background-color: rgba(255, 165, 0, 0.05); min-height: 150px;">
+            <h3 style="color: darkorange; margin-top: 0;">🟠 People Allocation</h3>
+            <p style="font-size: 16px; color: #333333;">{active_goal_info["people"]}</p>
+        </div>
+        """, 
+        unsafe_allowed_html=True
+    )
     
-    with col1:
-        st.subheader("🟠 People Allocations")
-        for item in st.session_state.placed_goals:
-            if "People" in item['component']:
-                st.write(f"* {item['goal']}")
-                
-    with col2:
-        st.subheader("🔵 Planet Allocations")
-        for item in st.session_state.placed_goals:
-            if "Planet" in item['component']:
-                st.write(f"* {item['goal']}")
-                
-    with col3:
-        st.subheader("🟢 Profit Allocations")
-        for item in st.session_state.placed_goals:
-            if "Profit" in item['component']:
-                st.write(f"* {item['goal']}")
+with col2:
+    st.markdown(
+        f"""
+        <div style="border: 2px solid #3498db; padding: 15px; border-radius: 8px; background-color: rgba(52, 152, 219, 0.05); min-height: 150px;">
+            <h3 style="color: #2980b9; margin-top: 0;">🔵 Planet Allocation</h3>
+            <p style="font-size: 16px; color: #333333;">{active_goal_info["planet"]}</p>
+        </div>
+        """, 
+        unsafe_allowed_html=True
+    )
+    
+with col3:
+    st.markdown(
+        f"""
+        <div style="border: 2px solid #2ecc71; padding: 15px; border-radius: 8px; background-color: rgba(46, 204, 113, 0.05); min-height: 150px;">
+            <h3 style="color: #27ae60; margin-top: 0;">🟢 Profit Allocation</h3>
+            <p style="font-size: 16px; color: #333333;">{active_goal_info["profit"]}</p>
+        </div>
+        """, 
+        unsafe_allowed_html=True
+    )
