@@ -141,7 +141,6 @@ fig.update_layout(
 )
 
 # 6. Optional: Capture Click Events (Preserving mapping mechanics)
-st.subheader("2. TBL Interactive Map View")
 click_data = plotly_events(fig, click_event=True, hover_event=False, override_height=550, override_width="100%")
 
 if click_data:
