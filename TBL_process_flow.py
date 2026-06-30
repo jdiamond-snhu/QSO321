@@ -30,23 +30,18 @@ if st.sidebar.button("Reset Matrix"):
 fig = go.Figure()
 
 # --- STEP 1: THE THREE STOOL LEGS (Drawn First / Sent to Back) ---
-# 1. People Leg (Light Orange)
 fig.add_shape(
     type="path",
     path="M 1.5,7.1 L 1.5,1.3 Q 2.5,0.7 3.5,1.3 L 3.5,7.1 Z",
     fillcolor="rgba(255, 165, 0, 0.4)", 
     line=dict(color="Orange", width=2)
 )
-
-# 2. Planet Leg (Light Blue)
 fig.add_shape(
     type="path",
     path="M 4.0,7.1 L 4.0,1.3 Q 5.0,0.7 6.0,1.3 L 6.0,7.1 Z",
     fillcolor="rgba(52, 152, 219, 0.4)", 
     line=dict(color="SkyBlue", width=2)
 )
-
-# 3. Profit Leg (Light Green)
 fig.add_shape(
     type="path",
     path="M 6.5,7.1 L 6.5,1.3 Q 7.5,0.7 8.5,1.3 L 8.5,7.1 Z",
@@ -55,16 +50,13 @@ fig.add_shape(
 )
 
 
-# --- STEP 2: 3D OVAL SEAT ASSEMBLY (Drawn Last / Brought to Front) ---
-# A. Top of the seat: A flat horizontal oval surface
+# --- STEP 2: 3D OVAL SEAT ASSEMBLY ---
 fig.add_shape(
     type="path",
     path="M 1.0,7.6 Q 5.0,8.2 9.0,7.6 Q 5.0,7.0 1.0,7.6 Z",
     fillcolor="rgba(200, 200, 200, 0.9)",
     line=dict(color="Gray", width=1.5)
 )
-
-# B. Front rim of the seat: Gives the seat its 3D depth/thickness and covers the leg tops
 fig.add_shape(
     type="path",
     path="M 1.0,7.6 Q 5.0,7.0 9.0,7.6 L 9.0,7.1 Q 5.0,6.5 1.0,7.1 Z",
@@ -73,12 +65,47 @@ fig.add_shape(
 )
 
 
-# --- STEP 3: TEXT LABELS AND PLACED GOALS ---
-# Text Labels for the Legs & Seat
-fig.add_trace(go.Scatter(x=[5.0], y=[7.5], mode="text", text=["SUSTAINABILITY SEAT"], textposition="top center"))
+# --- STEP 3: WHIMSICAL CARGO BOX (Sitting on the Seat) ---
+# Front-Left Face of the Box (Shaded darker cardboard brown)
+fig.add_shape(
+    type="path",
+    path="M 5.0,7.6 L 4.2,8.0 L 4.2,9.0 L 5.0,8.6 Z",
+    fillcolor="rgba(180, 130, 90, 1.0)",
+    line=dict(color="rgb(130, 90, 50)", width=1.5)
+)
+# Front-Right Face of the Box (Lighter cardboard brown)
+fig.add_shape(
+    type="path",
+    path="M 5.0,7.6 L 5.8,8.0 L 5.8,9.0 L 5.0,8.6 Z",
+    fillcolor="rgba(210, 160, 110, 1.0)",
+    line=dict(color="rgb(150, 100, 60)", width=1.5)
+)
+# Top Flaps Face of the Box
+fig.add_shape(
+    type="path",
+    path="M 5.0,8.6 L 4.2,9.0 L 5.0,9.4 L 5.8,9.0 Z",
+    fillcolor="rgba(230, 180, 130, 1.0)",
+    line=dict(color="rgb(160, 110, 70)", width=1.5)
+)
+
+
+# --- STEP 4: TEXT LABELS AND PLACED GOALS ---
+# Dynamic Symbol / Emoji Placement Inside the Box
+# Grabs the first character (the emoji) from the user's active goal string
+active_emoji = selected_goal[0] if selected_goal else "📦"
+fig.add_trace(go.Scatter(
+    x=[5.0], y=[8.4], 
+    mode="text", 
+    text=[f"<span style='font-size:32px;'>{active_emoji}</span>"], 
+    textposition="middle center"
+))
+
+# Labels for the Legs & Seat (Moved seat text higher to avoid the box)
+fig.add_trace(go.Scatter(x=[5.0], y=[9.7], mode="text", text=["<b>SUSTAINABILITY LOAD</b>"], textposition="top center"))
 fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
+
 
 
 # Plot already placed goals onto the chart
@@ -115,10 +142,11 @@ if click_data:
     cx = click_point["x"]
     cy = click_point["y"]
     
-    # Check what part of the stool was clicked based on revised boundaries
+        # Check what part of the stool was clicked based on revised boundaries
     component = "Outside Stool Boundaries"
     
-    if 6.5 <= cy <= 8.2 and 1.0 <= cx <= 9.0:
+    # Expanded y-range to 9.5 to accommodate clicking on the payload box
+    if 6.5 <= cy <= 9.5 and 1.0 <= cx <= 9.0:
         component = "Seat (Balance Area)"
     elif 0.7 <= cy < 6.5:
         if 1.5 <= cx <= 3.5:
