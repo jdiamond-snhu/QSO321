@@ -48,6 +48,11 @@ INDUSTRY_SECTOR_DATA = {
         "planet": "Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.",
         "profit": "Lower raw input material procurement costs (COGS) through scrap reductions."
     },
+    "🛎️ Hospitality & Guest Services": {
+        "people": "Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.",
+        "planet": "Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.",
+        "profit": "Lower overall cost of goods sold (COGS) and variable trash hauling utility costs through strict portion-waste controls."
+    },
     "💻 Technology & Digital Services": {
         "people": "Enforce strict boundaries on async communication to prevent digital fatigue and screen burnout.",
         "planet": "Optimize raw data infrastructure and cloud asset storage to reduce server farm grid loads.",
@@ -69,8 +74,8 @@ selected_goal_key = st.sidebar.radio(
     label_visibility="collapsed"
 )
 
-# Optional Step 2 Interface
-st.sidebar.header("2. Add Industry Filter (Optional)")
+# Optional Step 2 Interface with bold Markdown tag
+st.sidebar.header("2. Add Industry Filter (**Optional**)")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
     ["None (View Universal Strategy)"] + list(INDUSTRY_SECTOR_DATA.keys()),
