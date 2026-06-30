@@ -124,18 +124,6 @@ fig.add_trace(go.Scatter(x=[2.5], y=[4.0], mode="text", text=["PEOPLE<br>(Social
 fig.add_trace(go.Scatter(x=[5.0], y=[4.0], mode="text", text=["PLANET<br>(Environmental)"], textposition="middle center"))
 fig.add_trace(go.Scatter(x=[7.5], y=[4.0], mode="text", text=["PROFIT<br>(Economic)"], textposition="middle center"))
 
-# Plot user-clicked custom markers onto the chart if they click the canvas
-if st.session_state.placed_goals:
-    goals_x = [item['x'] for item in st.session_state.placed_goals]
-    goals_y = [item['y'] for item in st.session_state.placed_goals]
-    
-    fig.add_trace(go.Scatter(
-        x=goals_x, y=goals_y,
-        mode="markers",
-        marker=dict(size=14, color="#E74C3C", symbol="circle"),
-        name="User Pins"
-    ))
-
 # Graph Grid and Interactivity Settings
 fig.update_layout(
     xaxis=dict(range=[0, 10], showgrid=False, zeroline=False, visible=False),
