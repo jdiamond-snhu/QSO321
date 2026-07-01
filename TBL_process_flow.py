@@ -43,7 +43,7 @@ STRATEGIC_GOALS_DATA = {
 # 3. Define the Optional Industry Sector Data Structure
 # Multi-line strings are used here. Each row starts with exactly one industry emoji.
 INDUSTRY_SECTOR_DATA = {
-    "🏭 Manufacturing & Production": {
+    "🏭 **Manufacturing & Production**": {
         "people": """🏭 Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.
 🏭 Introduce mandatory hydration and stretching intervals during extended operational shifts.""",
         "planet": """🏭 Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.
@@ -89,7 +89,7 @@ selected_goal_key = st.sidebar.radio(
 st.sidebar.header("2. Optional: Choose an industry")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
-    ["None (View Universal Strategy)"] + list(INDUSTRY_SECTOR_DATA.keys()),
+    ["None (Use baseline strategy only)"] + list(INDUSTRY_SECTOR_DATA.keys()),
     index=0
 )
 
