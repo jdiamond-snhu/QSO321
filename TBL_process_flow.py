@@ -43,7 +43,7 @@ STRATEGIC_GOALS_DATA = {
 # 3. Define the Optional Industry Sector Data Structure
 # Multi-line strings are used here. Each row starts with exactly one industry emoji.
 INDUSTRY_SECTOR_DATA = {
-    "🏭 **Manufacturing & Production**": {
+    "**🏭 Manufacturing & Production**": {
         "people": """🏭 Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.
 🏭 Introduce mandatory hydration and stretching intervals during extended operational shifts.""",
         "planet": """🏭 Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.
