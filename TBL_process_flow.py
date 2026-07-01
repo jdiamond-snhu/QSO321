@@ -52,7 +52,7 @@ INDUSTRY_SECTOR_DATA = {
 🏭 Deploy predictive machine maintenance routines to drop unexpected assembly downtime."""
     },
     "🛎️ Hospitality & Guest Services": {
-        "people": """🛎️ Provide flexible shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.
+        "people": """🛎️ Provide flexible shift-scheduling practices to reduce employee burnout.
 🛎️ Organize team volunteer days and set up structured surplus food donation programs with local food banks.""",
         "planet": """🛎️ Optimize kitchen inventory tracking to assist FIFO to reduce food waste.
 🛎️ Commit to either linens or eco-friendly biodegradable service items (take-out containers, napkins, etc.)""",
