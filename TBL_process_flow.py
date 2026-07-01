@@ -89,7 +89,7 @@ selected_goal_key = st.sidebar.radio(
 st.sidebar.header("2. Optional: Choose an industry")
 selected_industry_key = st.sidebar.radio(
     "Industry Selector",
-    ["None ("Use baseline strategy only")"] + list(INDUSTRY_SECTOR_DATA.keys()),
+    ["None (Use baseline strategy only)"] + list(INDUSTRY_SECTOR_DATA.keys()),
     index=0
 )
 
@@ -101,7 +101,7 @@ else:
     active_goal_info = None
     active_emoji = "❓"
 
-has_industry = selected_industry_key != "None (View Universal Strategy)"
+has_industry = selected_industry_key != "None (Use baseline strategy only)"
 if has_industry:
     active_industry_info = INDUSTRY_SECTOR_DATA[selected_industry_key]
 else:
