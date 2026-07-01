@@ -43,19 +43,19 @@ STRATEGIC_GOALS_DATA = {
 # 3. Define the Optional Industry Sector Data Structure
 # Multi-line strings are used here. Each row starts with exactly one industry emoji.
 INDUSTRY_SECTOR_DATA = {
-    "**🏭 Manufacturing & Production**": {
-        "people": """🏭 Cross-train assembly crews on ergonomic physical safety to prevent repetitive task fatigue.
-🏭 Introduce mandatory hydration and stretching intervals during extended operational shifts.""",
-        "planet": """🏭 Implement 'design to reduce material waste' policies to eliminate structural pattern scrap upfront.
+    "🏭 Manufacturing & Production": {
+        "people": """🏭 Cross-train assembly crews to prevent repetitive task fatigue.
+🏭 Provide hydration and stretching intervals during extended operational shifts.""",
+        "planet": """🏭 Implement in-design processes to reduce material waste by eliminating structural pattern scrap upfront.
 🏭 Transition facility lighting arrays to high-efficiency industrial LEDs.""",
         "profit": """🏭 Lower raw input material procurement costs (COGS) through scrap reductions.
 🏭 Deploy predictive machine maintenance routines to drop unexpected assembly downtime."""
     },
     "🛎️ Hospitality & Guest Services": {
-        "people": """🛎️ Implement fair, predictable shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.
+        "people": """🛎️ Provide flexible shift-scheduling practices and tips-equity protection to reduce frontline employee burnout.
 🛎️ Organize team volunteer days and set up structured surplus food donation programs with local food banks.""",
-        "planet": """🛎️ Deploy 'design to reduce material waste' policies by optimizing kitchen inventory tracking and commercial food scrap diversion loops.
-🛎️ Transition to eco-friendly biodegradable takeout containers and compostable service items.""",
+        "planet": """🛎️ Optimize kitchen inventory tracking to assist FIFO to reduce food waste.
+🛎️ Commit to either linens or eco-friendly biodegradable service items (take-out containers, napkins, etc.)""",
         "profit": """🛎️ Lower overall cost of goods sold (COGS) and variable trash hauling utility costs through strict portion-waste controls.
 🛎️ Cut corporate water utility outlays by installing sensor-activated commercial dishwashing hardware."""
     },
